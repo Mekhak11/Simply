@@ -23,7 +23,7 @@ extension UserCell {
             location
         }
         .padding()
-        .frame(height: 240)
+        .frame(width: 160,height: 240)
         .background(Color(.systemGray6))
         .cornerRadius(12)
         .shadow(radius: 4)

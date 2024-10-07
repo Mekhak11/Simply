@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UsersListView<T: UserDataViewModeling>: View {
     @ObservedObject var viewModel: T
-    var columns = Array(repeating:GridItem(.flexible()), count: 3)
+    var columns = Array(repeating:GridItem(.flexible()), count: 2)
     
     var body: some View {
         NavigationStack {
