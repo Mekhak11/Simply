@@ -14,7 +14,7 @@ struct UsersListView<T: UserDataViewModeling>: View {
     var body: some View {
         NavigationStack {
             content
-                .onAppear(perform: {
+                .onLoad(perform: {
                     for i in 1...5 {
                         viewModel.loadUsers(page: i)
                     }
