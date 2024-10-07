@@ -55,15 +55,24 @@ struct ID: Codable {
 struct Location: Codable {
     let street: Street
     let city, state, country: String
-    let postcode: String? // Handle both String and Int for postcode
+    let postcode: String? 
     let coordinates: Coordinates
     let timezone: Timezone
     
     enum CodingKeys: String, CodingKey {
         case street, city, state, country, postcode, coordinates, timezone
     }
-
-    // Custom decoder to handle both Int and String for postcode
+    
+    init(street: Street, city: String, state: String, country: String, postcode: String?, coordinates: Coordinates, timezone: Timezone) {
+        self.street = street
+        self.city = city
+        self.state = state
+        self.country = country
+        self.postcode = postcode
+        self.coordinates = coordinates
+        self.timezone = timezone
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         street = try container.decode(Street.self, forKey: .street)
@@ -73,7 +82,6 @@ struct Location: Codable {
         coordinates = try container.decode(Coordinates.self, forKey: .coordinates)
         timezone = try container.decode(Timezone.self, forKey: .timezone)
         
-        // Custom handling for postcode
         if let postcodeInt = try? container.decode(Int.self, forKey: .postcode) {
             postcode = String(postcodeInt)
         } else if let postcodeString = try? container.decode(String.self, forKey: .postcode) {

@@ -29,7 +29,7 @@ class UserDataViewModel: UserDataViewModeling {
                 }
             }, receiveValue: { [weak self] response in
                 guard let result = response.results else { return }
-                self?.users = result
+                self?.users += result
                 DispatchQueue.main.async {
                     result.forEach({ user in
                         print(user.name.title,user.name.first, user.name.last, separator: " ")

@@ -11,7 +11,7 @@ import SwiftUI
 struct UserDataApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: UserDataViewModel(networkManager: NetworkManager()))
+            ContentView()
         }
     }
 }
