@@ -69,12 +69,12 @@ extension UserDetailsView {
     private var username: some View {
         Text("@\(user.login.username)")
             .font(.subheadline)
-            .foregroundColor(.gray)
+            .foregroundStyle(.gray)
     }
     private var location: some View {
         Text("\(user.location.city), \(user.location.country)")
             .font(.body)
-            .foregroundColor(.gray)
+            .foregroundStyle(.gray)
     }
     
     private var lowerContent: some View {

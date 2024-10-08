@@ -8,19 +8,57 @@
 import SwiftUI
 
 struct UserCell: View {
+    @State  var isFlipped = false
+    
     var user: User
+    
     var body: some View {
-        content
+        ZStack {
+       
+            if isFlipped {
+                backContent
+            } else {
+                content
+            }
+        }.rotation3DEffect(
+            .degrees(isFlipped ? 180 : 0),
+            axis: (x: 0, y: 1, z: 0)
+        )
+        .animation(.easeInOut(duration: 0.6), value: isFlipped)
+        //        .onTapGesture {
+        
+        //        }
     }
 }
 
 extension UserCell {
     
+    private var backContent: some View {
+        VStack(spacing: 10) {
+           flipButton
+            Spacer()
+            gender
+            mail
+            Spacer()
+        }
+        .padding()
+        .frame(width: 160,height: 240)
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+        .shadow(radius: 4)
+        .rotation3DEffect(
+            .degrees(180),
+            axis: (x: 0, y: 1, z: 0)
+        )
+    }
+    
     private var content: some View {
         VStack(spacing: 10) {
+            flipButton
             image
             name
             location
+            Spacer()
         }
         .padding()
         .frame(width: 160,height: 240)
@@ -29,6 +67,19 @@ extension UserCell {
         .shadow(radius: 4)
     }
     
+    private var flipButton: some View {
+        HStack {
+            Spacer()
+            Button {
+                withAnimation {
+                    isFlipped.toggle()
+                }
+            }label: {
+                Image(systemName: "flip.horizontal")
+                    .foregroundStyle(.black)
+            }
+        }
+    }
     @ViewBuilder
     private var image: some View {
         if let imageUrl = URL(string: user.picture.medium) {
@@ -56,8 +107,26 @@ extension UserCell {
     private var location: some View {
         Text("\(user.location.city), \(user.location.country)")
             .font(.caption)
-            .foregroundColor(.secondary)
+            .foregroundStyle(.secondary)
             .lineLimit(1)
+    }
+    
+    private var mail: some View {
+        HStack {
+            Image(systemName: "envelope.fill")
+            Text(user.email)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .font(.caption)
+        }
+    }
+    private var gender: some View {
+        HStack {
+            Image(systemName: "person.crop.circle")
+            Text(user.gender.rawValue)
+                .lineLimit(1)
+                .truncationMode(.tail)
+        }
     }
 }
 
